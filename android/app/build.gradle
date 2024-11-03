@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.ludwigw.testexpo52'
+    namespace 'com.ludwigw.travelai'
     defaultConfig {
-        applicationId 'com.ludwigw.testexpo52'
+        applicationId 'com.ludwigw.travelai'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

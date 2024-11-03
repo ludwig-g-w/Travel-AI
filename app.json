@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "test-expo-52",
-    "slug": "test-expo-52",
+    "name": "travel-ai",
+    "slug": "travel-ai",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "travel-ai",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,25 +15,27 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ludwigw.testexpo52"
+      "bundleIdentifier": "com.ludwigw.travelai"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ludwigw.testexpo52"
+      "package": "com.ludwigw.travelai"
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router"
     ],
     "experiments": {
-      "typedRoutes": true
+      "typedRoutes": true,
+      "reactServerComponents": true,
+      "reactServerActions": true
     }
   }
 }
