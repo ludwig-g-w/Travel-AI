@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 
 export default function RootLayout() {
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <Slot />
       <View
         style={{

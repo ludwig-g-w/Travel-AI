@@ -5,8 +5,15 @@ import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 
 export default async function renderInfo({ name }: { name: string }) {
-  // Securely fetch data from an API, and read environment variables...
-  return <Text>Hello, {name}!</Text>;
+  // Fetch user data or any other data you need
+  const user = await getUser({ id: 1 }); // Example: Fetch user with ID 1
+
+  return (
+    <>
+      <Text>Hello, {name}!</Text>
+      {user && <Text>User Email: {user.email}</Text>}
+    </>
+  );
 }
 
 export async function getUser({ id }: { id: number }) {

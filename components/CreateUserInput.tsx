@@ -15,7 +15,6 @@ function CreateUserInput() {
         }}
         value={email}
         onChangeText={setEmail}
-        className="w-40 bg-black text-white border-2 border-black p-2 "
         placeholder="Email"
       />
       <TouchableOpacity onPress={() => createUser({ email })}>

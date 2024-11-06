@@ -1,6 +1,5 @@
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
-import { StyleSheet } from "react-native";
 
 export const unstable_settings = {
   render: "static",
