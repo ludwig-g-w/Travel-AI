@@ -4,17 +4,17 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, ScrollView } from "react-native";
 
 export default function Index() {
-  const [messages, setMessages] = useState<string[]>([]);
-  const [input, setInput] = useState<string>("");
+  // const [messages, setMessages] = useState<string[]>([]);
+  // const [input, setInput] = useState<string>("");
 
-  const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, input]);
-      setInput("");
-      // Here you would typically send the input to your backend or API
-      // and receive a response to add to the messages.
-    }
-  };
+  // const handleSend = () => {
+  //   if (input.trim()) {
+  //     setMessages([...messages, input]);
+  //     setInput("");
+  //     // Here you would typically send the input to your backend or API
+  //     // and receive a response to add to the messages.
+  //   }
+  // };
 
   return (
     <View
@@ -25,13 +25,13 @@ export default function Index() {
       }}
     >
       <ScrollView style={{ flex: 1, marginBottom: 16 }}>
-        {messages.map((message, index) => (
+        {[].map((message, index) => (
           <View key={index} style={{ marginBottom: 8 }}>
             <Text>{message}</Text>
           </View>
         ))}
       </ScrollView>
-      <TextInput
+      {/* <TextInput
         style={{
           height: 40,
           borderColor: "gray",
@@ -43,7 +43,7 @@ export default function Index() {
         onChangeText={setInput}
         placeholder="Type your message..."
       />
-      <Button title="Send" onPress={handleSend} />
+      <Button title="Send" onPress={handleSend} /> */}
     </View>
   );
 }
