@@ -1,6 +1,6 @@
 "use client";
 
-import { createUser } from "@/actions/render-info";
+import { createUser } from "@/src/actions/server-actions";
 import { TouchableOpacity, Text, TextInput, View } from "react-native";
 import { useState } from "react";
 

@@ -1,7 +1,7 @@
 "use client";
 import { use, useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { getUser } from "@/actions/render-info";
+import { getUser } from "@/src/actions/render-info";
 import { User } from "@prisma/client";
 
 export default function DisplayUser() {

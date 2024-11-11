@@ -1,49 +1,42 @@
 /// <reference types="react/canary" />
 
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, ScrollView } from "react-native";
+import OpenAI from "openai";
+import React, { Suspense } from "react";
+import Chat from "@/src/components/Chat";
+import RecursiveText from "@/src/components/RecursiveText";
+import { ChatCompletionMessageParam } from "openai/resources/chat";
 
-export default function Index() {
-  // const [messages, setMessages] = useState<string[]>([]);
-  // const [input, setInput] = useState<string>("");
+const openai = new OpenAI({
+  apiKey: process.env.PERPLEXITY_API_KEY,
+  baseURL: "https://api.perplexity.ai",
+});
 
-  // const handleSend = () => {
-  //   if (input.trim()) {
-  //     setMessages([...messages, input]);
-  //     setInput("");
-  //     // Here you would typically send the input to your backend or API
-  //     // and receive a response to add to the messages.
-  //   }
-  // };
+const msgs = [
+  {
+    role: "system",
+    content: "make the shortest possible response",
+  },
+] as ChatCompletionMessageParam[];
+
+export default async function Index() {
+  // @ts-expect-error
+  return <Chat sendMessage={sendMessage} />;
+}
+
+export async function sendMessage(message: string) {
+  "use server";
+
+  const response = await openai.chat.completions.create({
+    model: "llama-3.1-sonar-small-128k-online",
+    messages: [...msgs, { role: "user", content: message }],
+    stream: true,
+  });
+  const stream = response.toReadableStream();
+  const reader = stream.getReader();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 16,
-        justifyContent: "center",
-      }}
-    >
-      <ScrollView style={{ flex: 1, marginBottom: 16 }}>
-        {[].map((message, index) => (
-          <View key={index} style={{ marginBottom: 8 }}>
-            <Text>{message}</Text>
-          </View>
-        ))}
-      </ScrollView>
-      {/* <TextInput
-        style={{
-          height: 40,
-          borderColor: "gray",
-          borderWidth: 1,
-          marginBottom: 8,
-          paddingHorizontal: 8,
-        }}
-        value={input}
-        onChangeText={setInput}
-        placeholder="Type your message..."
-      />
-      <Button title="Send" onPress={handleSend} /> */}
-    </View>
+    <Suspense>
+      <RecursiveText buffer={reader} />
+    </Suspense>
   );
 }
