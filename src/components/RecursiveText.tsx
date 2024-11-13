@@ -10,10 +10,10 @@ export default async function RecursiveText({
   const { done, value } = await buffer.read();
   if (done) return null;
   const text: ChatCompletion = JSON.parse(new TextDecoder().decode(value));
-  console.log(text.choices[0].delta.content);
+
   return (
     <Text>
-      {text.choices[0].message.content}
+      {text.choices[0].delta.content}
       <Suspense>
         <RecursiveText buffer={buffer} />
       </Suspense>

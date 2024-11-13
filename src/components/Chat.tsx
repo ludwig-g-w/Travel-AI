@@ -1,20 +1,19 @@
 "use client";
 
+/// <reference types="react/canary" />
+import React from "react";
+
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
-  Text,
   TextInput,
   View,
 } from "react-native";
+import { sendMessage } from "../actions/ai";
 
-export default function Chat({
-  sendMessage,
-}: {
-  sendMessage: (message: string) => string;
-}) {
-  const [messages, setMessages] = useState<string>("");
+export default function Chat() {
+  const [messages, setMessages] = useState<React.JSX.Element[]>([]);
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
@@ -32,8 +31,8 @@ export default function Chat({
           <TextInput
             onSubmitEditing={async ({ nativeEvent: { text } }) => {
               const message = await sendMessage(text);
-              console.log(message);
-              setMessages(message);
+
+              setMessages((prev) => [...prev, message]);
             }}
             style={{
               flex: 1,
