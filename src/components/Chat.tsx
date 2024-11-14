@@ -1,8 +1,5 @@
 "use client";
-
-/// <reference types="react/canary" />
 import React from "react";
-
 import { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -10,13 +7,21 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { sendMessage } from "../actions/ai";
+import {
+  searchForEventsTodayWithPerplexity,
+  sendCustomMessage,
+} from "@src/actions/ai";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Chat() {
   const [messages, setMessages] = useState<React.JSX.Element[]>([]);
+  const insets = useSafeAreaInsets();
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={"padding"}>
+    <KeyboardAvoidingView
+      style={{ flex: 1, paddingTop: insets.top }}
+      behavior={"padding"}
+    >
       <View
         style={{
           flex: 1,
@@ -30,8 +35,9 @@ export default function Chat() {
         <View style={{ flexDirection: "row", gap: 8 }}>
           <TextInput
             onSubmitEditing={async ({ nativeEvent: { text } }) => {
-              const message = await sendMessage(text);
-
+              const message = await searchForEventsTodayWithPerplexity(
+                "young girl, find friends, instagrammable"
+              );
               setMessages((prev) => [...prev, message]);
             }}
             style={{

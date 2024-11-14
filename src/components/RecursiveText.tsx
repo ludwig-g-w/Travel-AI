@@ -1,27 +1,48 @@
 import { Suspense } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 export default async function RecursiveText({
   buffer,
+  isFirst = true,
 }: {
   buffer: ReadableStreamReader<Uint8Array>;
+  isFirst?: boolean;
 }) {
   // @ts-expect-error
   const { done, value } = await buffer.read();
   if (done) return null;
-  const text: ChatCompletion = JSON.parse(new TextDecoder().decode(value));
+  const text: PerplexityChatCompletion = JSON.parse(
+    new TextDecoder().decode(value)
+  );
+
+  const Container = ({ children }: { children: React.ReactNode }) =>
+    isFirst ? (
+      <View
+        style={{
+          padding: 8,
+          borderRadius: 8,
+          backgroundColor: "#f0f0f0",
+        }}
+      >
+        {children}
+      </View>
+    ) : (
+      <>{children}</>
+    );
 
   return (
-    <Text>
-      {text.choices[0].delta.content}
-      <Suspense>
-        <RecursiveText buffer={buffer} />
-      </Suspense>
-    </Text>
+    <Container>
+      <Text>
+        {text.choices[0].delta.content}
+        <Suspense>
+          <RecursiveText buffer={buffer} isFirst={false} />
+        </Suspense>
+      </Text>
+    </Container>
   );
 }
 
-type ChatCompletion = {
+type PerplexityChatCompletion = {
   id: string;
   model: string;
   created: number;

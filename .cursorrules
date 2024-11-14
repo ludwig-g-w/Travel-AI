@@ -1,2 +1,5 @@
-This project is a latest version of Expo SDK 52 React Native. Which means that it has an experimental feature called "React Native Server Components" and "React Native Server Components".
-Every file that doesnt have "use client" is a server component, which means that it's rendered in a Node.js environment, I fetch data directly in the server component but I can not use any React hooks or any other client side code.
+*This project is a latest version of Expo SDK 52 React Native. Which means that it has an experimental feature called "React Native Server Components" and "React Native Server Components".
+* in server components I can use any Node.js code
+* I can fetch data directly in the server component but I can not use any React hooks or any other client side code.
+* if there is no "use client" in the file, then it's a server component.
+* in server components I can't use Stylesheet, only inline styles.
