@@ -1,58 +1,119 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import { Message, Citation } from "@prisma/client";
+import { searchForEventsTodayWithPerplexity } from "@src/actions/ai";
+import { createMessage } from "@src/actions/message-actions";
+import React, { useMemo, useRef } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
+  Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
-import {
-  searchForEventsTodayWithPerplexity,
-  sendCustomMessage,
-} from "@src/actions/ai";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { formatEventResponse } from "../utils";
+import { useRouter } from "expo-router";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-export default function Chat() {
-  const [messages, setMessages] = useState<React.JSX.Element[]>([]);
+export type MessageWithCitations = Message & { citations: Citation[] };
+
+function Chat({ messages }: { messages: MessageWithCitations[] }) {
+  const ref = useRef<TextInput>(null);
   const insets = useSafeAreaInsets();
+  const router = useRouter();
+
+  const formattedMessages = useMemo(
+    () =>
+      messages.map((message) => {
+        if (message.type === "events") {
+          return formatEventResponse(message);
+        }
+        return (
+          <Text
+            style={{
+              marginRight: 16,
+              alignSelf: "flex-end",
+              fontSize: 16,
+              padding: 8,
+              backgroundColor: "lightblue",
+              borderRadius: 8,
+              flex: 0,
+              marginBottom: 8,
+            }}
+          >
+            {message.input}
+          </Text>
+        );
+      }),
+    [messages]
+  );
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, paddingTop: insets.top }}
-      behavior={"padding"}
+    <GestureHandlerRootView
+      style={{
+        flex: 1,
+      }}
     >
-      <View
-        style={{
-          flex: 1,
-          padding: 16,
-          justifyContent: "center",
-        }}
+      <KeyboardAvoidingView
+        style={{ flex: 1, paddingTop: insets.top }}
+        behavior={"padding"}
       >
-        <ScrollView style={{ flex: 1, marginBottom: 16 }}>
-          <View>{messages}</View>
-        </ScrollView>
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          <TextInput
-            onSubmitEditing={async ({ nativeEvent: { text } }) => {
-              const message = await searchForEventsTodayWithPerplexity(
-                "young girl, find friends, instagrammable"
-              );
-              setMessages((prev) => [...prev, message]);
-            }}
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <ScrollView style={{ flex: 1, marginBottom: 16, gap: 8 }}>
+            {formattedMessages}
+          </ScrollView>
+          <View
             style={{
-              flex: 1,
-              height: 40,
-              borderRadius: 8,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 8,
-              paddingHorizontal: 8,
+              flexDirection: "row",
+              gap: 8,
+              alignItems: "center",
+              padding: 16,
             }}
-            placeholder="Type your message..."
-          />
+          >
+            <TextInput
+              ref={ref}
+              onSubmitEditing={async (event) => {
+                if (!event.nativeEvent.text.trim()) return;
+                await createMessage({
+                  input: event.nativeEvent.text,
+                  type: "none",
+                });
+                ref.current?.clear();
+                router.reload();
+              }}
+              style={{
+                flex: 1,
+                height: 48,
+                borderRadius: 8,
+                borderColor: "gray",
+                borderWidth: 1,
+
+                paddingHorizontal: 8,
+              }}
+              placeholder="Type your message..."
+            />
+            <TouchableOpacity
+              onPress={async () => {
+                await searchForEventsTodayWithPerplexity(DESCRIPTION);
+                ref.current?.clear();
+                router.reload();
+              }}
+            >
+              <Text>Search events</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </GestureHandlerRootView>
   );
 }
+
+export default React.memo(Chat);
+
+const DESCRIPTION = "young girl, find friends, instagrammable";

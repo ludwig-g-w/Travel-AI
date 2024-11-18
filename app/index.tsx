@@ -1,8 +1,32 @@
 /// <reference types="react/canary" />
 
+import EventCardSkeleton from "@/src/components/EventCardSkeleton";
+import { PrismaClient } from "@prisma/client";
 import Chat from "@src/components/Chat";
-import React from "react";
+import React, { Suspense } from "react";
+import { View } from "react-native";
+
+const db = new PrismaClient();
 
 export default async function Index() {
-  return <Chat />;
+  const dbMessages = await db.message.findMany({
+    where: { userId: 1 },
+    take: 10,
+    orderBy: { createdAt: "asc" },
+    include: { citations: true },
+  });
+
+  return (
+    <Suspense
+      fallback={
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <EventCardSkeleton />
+        </View>
+      }
+    >
+      <Chat messages={dbMessages} />
+    </Suspense>
+  );
 }
