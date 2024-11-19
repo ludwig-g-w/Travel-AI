@@ -31,6 +31,7 @@ function Chat({ messages }: { messages: MessageWithCitations[] }) {
         }
         return (
           <Text
+            key={message.id}
             style={{
               marginRight: 16,
               alignSelf: "flex-end",

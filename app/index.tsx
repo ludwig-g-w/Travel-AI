@@ -11,8 +11,8 @@ const db = new PrismaClient();
 export default async function Index() {
   const dbMessages = await db.message.findMany({
     where: { userId: 1 },
-    take: 10,
-    orderBy: { createdAt: "asc" },
+    take: 4,
+    orderBy: { createdAt: "desc" },
     include: { citations: true },
   });
 

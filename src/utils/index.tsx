@@ -20,7 +20,7 @@ interface Event {
 export function parseEventsFromText(message: MessageWithCitations): Event[] {
   const events: Event[] = [];
   const eventRegex =
-    /\d+\.\s+\*\*(.*?)\*\*:\s*\n\s*-\s*\*\*Location\*\*:\s*(.*?)\n\s*-\s*\*\*Time\*\*:\s*(.*?)\n\s*-\s*\*\*Description\*\*:\s*(.*?)\[(\d+)\]\.(?=\n\n|\n\d+\.|$)/gs;
+    /\d+\.\s+\*\*(.*?)\*\*:\s*\n\s*-\s*\*\*Location\*\*:\s*(.*?)\n\s*-\s*\*\*Time\*\*:\s*(.*?)\n\s*-\s*\*\*Description\*\*:\s*(.*?)(?:\[(\d+)\])?\.?(?=\n\n|\n\d+\.|$)/gs;
 
   let match;
   while ((match = eventRegex.exec(message.input)) !== null) {
@@ -32,6 +32,7 @@ export function parseEventsFromText(message: MessageWithCitations): Event[] {
       date: match[3],
       location: match[2],
       description: match[4].trim(),
+      // TODO: fix this
       url: citation?.url,
     });
   }
