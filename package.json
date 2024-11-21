@@ -1,7 +1,7 @@
 {
   "name": "travel-ai",
   "license": "0BSD",
-  "main": "expo-router/entry",
+  "main": "src/index.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --dev-client",
@@ -32,11 +32,13 @@
     "expo-font": "~13.0.1",
     "expo-haptics": "~14.0.0",
     "expo-linking": "~7.0.2",
+    "expo-location": "~18.0.1",
     "expo-router": "~4.0.5",
     "expo-splash-screen": "~0.29.9",
     "expo-status-bar": "~2.0.0",
     "expo-symbols": "~0.2.0",
     "expo-system-ui": "~4.0.2",
+    "expo-task-manager": "~12.0.3",
     "expo-web-browser": "~14.0.1",
     "openai": "^4.71.1",
     "prisma": "^5.21.1",

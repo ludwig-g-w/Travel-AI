@@ -15,7 +15,13 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ludwigw.travelai"
+      "bundleIdentifier": "com.ludwigw.travelai",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "fetch",
+          "location"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +37,13 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "We need your location to provide you with relevant information about your surroundings.",
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

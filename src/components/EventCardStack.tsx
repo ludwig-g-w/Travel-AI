@@ -20,6 +20,8 @@ export default function EventCardStack({
 }: EventCardStackProps) {
   return (
     <FlatList
+      style={{ flexGrow: 0, flexShrink: 0 }}
+      contentContainerStyle={{ flexGrow: 0, flexShrink: 0 }}
       data={events}
       horizontal
       pagingEnabled
@@ -33,7 +35,13 @@ export default function EventCardStack({
         onSwipeComplete?.(index);
       }}
       renderItem={({ item }) => (
-        <View style={{ width: SCREEN_WIDTH, paddingHorizontal: 16 }}>
+        <View
+          key={item.title}
+          style={{
+            width: SCREEN_WIDTH,
+            paddingHorizontal: 16,
+          }}
+        >
           <EventCard event={item} />
         </View>
       )}

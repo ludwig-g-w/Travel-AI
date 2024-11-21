@@ -30,3 +30,13 @@ Have you ever been lost and unsure how to get the most out of your vacation? Oft
   - Activities
   - Shopping
   - Transportation
+
+## Notes
+
+- on prebuild clean don't forget to check that info.plist has:
+
+  <key>UIBackgroundModes</key>
+  <array>
+  <string>fetch</string>
+  <string>location</string>
+  </array>

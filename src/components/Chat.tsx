@@ -2,7 +2,7 @@
 import { Message, Citation } from "@prisma/client";
 import { searchForEventsTodayWithPerplexity } from "@src/actions/ai";
 import { createMessage } from "@src/actions/message-actions";
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -15,17 +15,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { formatEventResponse } from "../utils";
 import { useRouter } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useLocationTracker } from "../hooks/useLocationTracker";
 
 export type MessageWithCitations = Message & { citations: Citation[] };
 
 function Chat({ messages }: { messages: MessageWithCitations[] }) {
+  useLocationTracker();
   const ref = useRef<TextInput>(null);
   const insets = useSafeAreaInsets();
   const router = useRouter();
-
   const formattedMessages = useMemo(
     () =>
-      messages.map((message) => {
+      messages.reverse().map((message) => {
         if (message.type === "events") {
           return formatEventResponse(message);
         }
@@ -66,7 +67,18 @@ function Chat({ messages }: { messages: MessageWithCitations[] }) {
             justifyContent: "center",
           }}
         >
-          <ScrollView style={{ flex: 1, marginBottom: 16, gap: 8 }}>
+          <ScrollView
+            style={{
+              flex: 1,
+              marginBottom: 16,
+            }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: "flex-end",
+              gap: 8,
+              alignItems: "flex-end",
+            }}
+          >
             {formattedMessages}
           </ScrollView>
           <View
@@ -117,4 +129,4 @@ function Chat({ messages }: { messages: MessageWithCitations[] }) {
 
 export default React.memo(Chat);
 
-const DESCRIPTION = "young girl, find friends, instagrammable";
+const DESCRIPTION = "young, find friends, instagrammable";
