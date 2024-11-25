@@ -21,6 +21,11 @@
           "fetch",
           "location"
         ]
+      },
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
       }
     },
     "android": {
@@ -28,7 +33,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ludwigw.travelai"
+      "package": "com.ludwigw.travelai",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -41,7 +50,7 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "We need your location to provide you with relevant information about your surroundings.",
+          "locationAlwaysAndWhenInUsePermission": "We need your location to provide you with relevant information about your surroundings."
         }
       ]
     ],
@@ -49,6 +58,12 @@
       "typedRoutes": true,
       "reactServerComponentRoutes": true,
       "reactServerFunctions": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "8a8e7051-a2cc-491c-89ec-cf6d50a47094"
+      }
     }
   }
 }

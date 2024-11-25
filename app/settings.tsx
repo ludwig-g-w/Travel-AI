@@ -1,22 +1,5 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
-
-export const unstable_settings = {
-  render: "static",
-};
+import Notification from "@src/services/Notification";
 
 export default function Settings() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Link href="/">
-        <Text
-          style={{
-            fontSize: 24,
-          }}
-        >
-          Settings
-        </Text>
-      </Link>
-    </View>
-  );
+  return <Notification />;
 }
